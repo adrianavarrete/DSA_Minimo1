@@ -28,9 +28,10 @@ public class Playlist {
     public void addCancion(Cancion c){
 
         this.canciones.add(c);
+    }
 
-
-
+    public List<Cancion> dameCanciones(){
+        return this.canciones;
     }
 
     public void setNombre(String nombre) {

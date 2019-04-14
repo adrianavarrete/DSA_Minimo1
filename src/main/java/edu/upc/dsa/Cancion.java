@@ -6,19 +6,21 @@ public class Cancion {
 
     private String id;
     private String titulo;
-    private String artista;
+    private String idArtista;
     private double duracion;
+    private String album;
 
 
     public Cancion(){
 
     }
 
-    public Cancion(String id, String titulo, String artista, double duration){
+    public Cancion(String id, String titulo, String idArtista, double duration, String album){
         this.id = id;
         this.titulo = titulo;
-        this.artista = artista;
+        this.idArtista = idArtista;
         this.duracion = duration;
+        this.album = album;
 
     }
 
@@ -38,12 +40,12 @@ public class Cancion {
         this.titulo = titulo;
     }
 
-    public String getArtista() {
-        return artista;
+    public String getIdArtista() {
+        return idArtista;
     }
 
-    public void setArtista(String artista) {
-        this.artista = artista;
+    public void setIdArtista(String idArtista) {
+        this.idArtista = idArtista;
     }
 
     public double getDuracion() {
@@ -52,6 +54,14 @@ public class Cancion {
 
     public void setDuracion(double duracion) {
         this.duracion = duracion;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
     }
 }
 

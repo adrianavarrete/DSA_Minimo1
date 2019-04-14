@@ -34,11 +34,6 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-        <dependency>
-        <groupId>net.moznion</groupId>
-        <artifactId>random-string</artifactId>
-        <version>1.1.0</version>
-        </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -83,7 +78,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>edu.upc.eetac.dsa.Main</mainClass>
+                    <mainClass>edu.upc.dsa.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -95,5 +90,4 @@
         <swagger-jersey2-jaxrs.version>1.5.9</swagger-jersey2-jaxrs.version>
     </properties>
 
-    
 </project>

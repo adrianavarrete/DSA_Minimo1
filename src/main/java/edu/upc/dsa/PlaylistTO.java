@@ -1,19 +1,23 @@
 package edu.upc.dsa;
 
+import java.util.LinkedList;
+import java.util.List;
 
-public class Artista {
+public class PlaylistTO {
 
     private String id;
     private String nombre;
-    private String apellido;
+    private String idUser;
 
-    public Artista(String id,String nombre, String apellido) {
+
+    public PlaylistTO(String id, String nombre, String idUser) {
         this.id = id;
         this.nombre = nombre;
-        this.apellido = apellido;
+        this.idUser = idUser;
+
     }
 
-    public Artista(){
+    public PlaylistTO(){
 
     }
 
@@ -21,17 +25,23 @@ public class Artista {
         return nombre;
     }
 
+
+
+
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
+
+
 
     public String getId() {
         return id;
@@ -41,5 +51,4 @@ public class Artista {
         this.id = id;
     }
 }
-
 

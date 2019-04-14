@@ -9,7 +9,8 @@ import java.util.List;
 
 public class MyMusicImpl implements MyMusic {
 
-    private final static Logger log = Logger.getLogger(MyMusic.class.getName());
+    private final static Logger log = Logger.getLogger(MyMusicImpl.class.getName());
+
     private static MyMusicImpl instance;
     private static HashMap<String, User> users;
     private static List<Playlist> playlists;
@@ -19,7 +20,6 @@ public class MyMusicImpl implements MyMusic {
     private MyMusicImpl() {
 
         this.users = new HashMap<>();
-        this.playlists = new ArrayList<>();
         this.artistas = new LinkedList<>();
 
 
@@ -35,98 +35,108 @@ public class MyMusicImpl implements MyMusic {
     @Override
     public void addArtista(Artista a) {
 
-        log.info("añado artista " + a.getNombre());
+        log.info("Se va a añadir un artista al sistema");
         this.artistas.add(a);
-        log.info("añadido");
-
-    }
-
-    public void addCancion(Cancion c, String idPlaylist, User u){
-
-        this.playlists.get(getPosListaById(idPlaylist)).addCancion(c);
-
+        log.info("Se ha añadido el artista " + a.getNombre() + " " + a.getApellido() + " en el sistema");
 
     }
 
     @Override
     public List<Artista> dameListaArtistas() {
+        log.info("Se esta solicitando el listado de artistas en el sistema");
         return this.artistas;
-    }
-
-    @Override
-    public void crearPlaylist(Cancion p) {
 
     }
 
     @Override
-    public void crearPlaylist(Playlist p, String idUser) {
+    public void crearPlaylist(Playlist p) {
+        log.info("Se va a crear una playlist");
 
-        this.playlists.add(p);
-        this.users.get(idUser).añadirPlaylist();
+        this.users.get(p.getIdUser()).añadirPlaylist(p);
+        log.info("Se ha añadido la playlist '" + p.getNombre() + "' en el usuario con id " + p.getIdUser());
+
 
     }
 
     @Override
-    public void setTitlePlaylist(String idPlaylist) {
+    public void addCancionPlaylist(String idPlaylist, String idUser, Cancion c) throws PlaylistNotFoundException, ArtistaNotFoundException {
+        log.info("Se va a añadir una canción en una playlist");
 
+        User u = this.users.get(idUser);
+        Playlist p = u.getPlaylistById(idPlaylist);
+
+        if (checkArtista(c.getIdArtista()) != false){
+
+            p.addCancion(c);
+
+        }else{
+            log.error("Artista no encontrado en el sistema");
+            throw new ArtistaNotFoundException();
+
+        }
+
+        log.info("Se ha añadido una canción en la playlist " + p.getId() + " del user " + u.getId());
+
+    }
+
+    @Override
+    public List<Cancion> dameListaPlaylistUser(String idUser, String idPlaylist) throws PlaylistNotFoundException {
+
+        log.info("Se soliicta el listado de canciones de una playlist '" + idPlaylist + "' del usuario '" +idUser+"'");
+        User u = this.users.get(idUser);
+        Playlist p = u.getPlaylistById(idPlaylist);
+        log.info("Solicitud completada");
+
+        return p.dameCanciones();
     }
 
     @Override
     public void addUser(User user) {
+        log.info("Se va a añadir un usuario al sistema");
         this.users.put(user.getId(),user);
+        log.info("Se ha añadido el usuario " + user.getId() + " al sistema");
+
     }
 
     @Override
-    public List<Playlist> dameListaPlaylist(String idUser) {
-        return this.playlists;
+    public List<Playlist> dameListaPlaylistsByUser(String idUser) {
+        return this.users.get(idUser).getPlaylists();
     }
 
     @Override
     public void clear() {
         this.users.clear();
-        this.playlists.clear();
         this.artistas.clear();
+
     }
 
-    public int getPosListaById(List<Playlist> lista, String id) {
+    public boolean checkArtista(String idArtista){
 
-        int pos = -1;
+        boolean check = false;
 
-        for(Playlist p: lista)
-        {
-            int i = 0;
-
-            if(p.getId() == id){
-                pos = i;
+        for(Artista a : this.artistas){
+            if(a.getId() == idArtista){
+                check = true;
                 break;
+            }else {
+                log.error("No se ha encontrado el Artista en el sistema");
 
             }
-            else{
-
-                i++;
-
-            }
-        }
-
-        if(pos != -1){
-            return pos;
-        }
-        else{
-
-            log.error("Pedido " + id + " no encontrado");
-
 
 
         }
+
+        return check;
 
     }
 
+    public int numArtistas(){
+        return this.artistas.size();
+    }
 
-
-
-
-
-
+    public int numUsers(){
+        return this.users.size();
+    }
 
 
 }

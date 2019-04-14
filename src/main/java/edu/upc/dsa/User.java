@@ -1,14 +1,17 @@
 package edu.upc.dsa;
 
+import org.apache.log4j.Logger;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class User {
 
+    private final static Logger log = Logger.getLogger(User.class.getName());
     private String id;
     private String nombre;
     private String apellido;
-    private List<Cancion> playlists;
+    private List<Playlist> playlists;
 
     public User(){
         this.playlists = new LinkedList<>();
@@ -22,6 +25,48 @@ public class User {
         this.playlists = new LinkedList<>();
 
     }
+
+    public Playlist getPlaylistById(String idPlaylist) throws PlaylistNotFoundException {
+
+        return this.playlists.get(getPosListaById(idPlaylist));
+
+    }
+
+    public int getPosListaById(String id) throws PlaylistNotFoundException {
+
+        int pos = -1;
+
+        for(Playlist p: this.playlists)
+        {
+            int i = 0;
+
+            if(p.getId() == id){
+                pos = i;
+                break;
+
+            }
+            else{
+
+                i++;
+
+            }
+        }
+
+        if(pos != -1){
+            return pos;
+        }
+        else{
+
+            log.fatal("Playlist " + id + " no encontrado");
+            throw new PlaylistNotFoundException();
+
+        }
+
+
+
+    }
+
+
 
     public String getId() {
         return id;
@@ -47,15 +92,15 @@ public class User {
         this.apellido = apellido;
     }
 
-    public List<Cancion> getPlaylists() {
+    public List<Playlist> getPlaylists() {
         return playlists;
     }
 
-    public void setPlaylists(List<Cancion> playlists) {
+    public void setPlaylists(List<Playlist> playlists) {
         this.playlists = playlists;
     }
 
-    public void añadirPlaylist(Cancion p){
+    public void añadirPlaylist(Playlist p){
         this.playlists.add(p);
     }
 }
